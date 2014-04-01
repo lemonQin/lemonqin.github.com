@@ -2,10 +2,10 @@ title:            LemonQin
 description:      Describe your website here.
 disqus_shortname: 
 #Your site's domain goes here. Leave localhost server or blank when working locally.
-#url:              http://lemonqin.github.io/
+url:              http://lemonqin.github.io
 #port:      4001
-url:               http://127.0.0.1:4001
-port:       4001
+#url:               http://127.0.0.1:4001
+#port:       4001
 
 # Owner/author information
 owner:
