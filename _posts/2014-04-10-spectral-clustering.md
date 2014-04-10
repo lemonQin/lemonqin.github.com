@@ -2,7 +2,7 @@
 layout: post
 title: 谱聚类
 description: 
-tags: [谱聚类] [聚类]
+tags: [谱聚类]
 image:
   background: triangular.png
 comments: true
