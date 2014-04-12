@@ -18,7 +18,7 @@ image:
     {% endif %}
   </header>
   <div class="entry-content">
-  <p>{% if post.description %}{{ post.description }}&hellip;{% endif %}</p>
+  <p>{{ post.description }}</p>
   <p>{{ post.content | truncate: 300 }}&hellip; </p>
 <!--  <p><a href="{{ site.url }}{{ post.url }}">Continue reading</a></p>-->
    <!-- {{ post.content }}-->
