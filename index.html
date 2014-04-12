@@ -18,7 +18,8 @@ image:
     {% endif %}
   </header>
   <div class="entry-content">
-  <p>{{ post.content | truncate: 300 }}&hellip; <a href="{{ site.url }}{{ post.url }}">Continue reading</a></p>
+  <p>{{ post.content | truncate: 300 }}&hellip; </p>
+  <p><a href="{{ site.url }}{{ post.url }}">Continue reading</a></p>
    <!-- {{ post.content }}-->
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
