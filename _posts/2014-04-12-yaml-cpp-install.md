@@ -84,7 +84,7 @@ make之后会看到生成的libyaml-cpp.so.0.5.1
 
 [官网上有**old API**例子](https://code.google.com/p/yaml-cpp/wiki/HowToParseADocument)
 
-由于安装的是0.5.1版本，用法参照[Tutorial](http://code.google.com/p/yaml-cpp/wiki/Tutorial)
+由于安装的是0.5.1版本，使用的是new API，用法参照[Tutorial](http://code.google.com/p/yaml-cpp/wiki/Tutorial)
 
 monster.yaml
 
@@ -113,7 +113,7 @@ monster.yaml
 {% endhighlight %}
 
 
-test_new_api.cpp
+自己写的小demo，test_new_api.cpp
 {% highlight cpp linenos%}
 #include "yaml-cpp/yaml.h"
 #include <iostream>
