@@ -13,6 +13,8 @@ share: true
 
 [下载yaml-cpp的最新版本](http://code.google.com/p/yaml-cpp/downloads/list), 目前的最新版本是yaml-cpp-0.5.1
 
+**较为通用的版本为0.3.0,使用的是old API, 0.5.1使用的是new API, 新老API差别很大，在参看使用[wiki](http://code.google.com/p/yaml-cpp/w/list)时，要看清楚， 以免出现误用，耽误时间**
+
 yaml-cpp需要CMake提供跨平台编译，因此如果没有安装CMake，需要首先安装CMake
 
 {% highlight html %}
@@ -80,7 +82,10 @@ make之后会看到生成的libyaml-cpp.so.0.5.1
 
 ###程序中使用
 
-[官网上有例子](https://code.google.com/p/yaml-cpp/wiki/HowToParseADocument)
+[官网上有old API例子](https://code.google.com/p/yaml-cpp/wiki/HowToParseADocument) **old API**
+
+由于安装的是0.5.1版本，用法参照[Tutorial](http://code.google.com/p/yaml-cpp/wiki/Tutorial)
+
 monster.yaml
 
 {% highlight html %}
@@ -107,8 +112,8 @@ monster.yaml
       damage: 3
 {% endhighlight %}
 
-main.cpp
 
+test_new_api.cpp
 {% highlight cpp linenos%}
 #include "yaml-cpp/yaml.h"
 #include <iostream>
@@ -132,39 +137,104 @@ struct Monster {
    std::vector <Power> powers;
 };
 
-// now the extraction operators for these types
-void operator >> (const YAML::Node& node, Vec3& v) {
-   node[0] >> v.x;
-   node[1] >> v.y;
-   node[2] >> v.z;
+namespace YAML {
+   template<>
+   struct convert<Vec3> {
+      static Node encode(const Vec3& rhs) {
+         Node node;
+         node.push_back(rhs.x);
+         node.push_back(rhs.y);
+         node.push_back(rhs.z);
+         return node;
+      }
+
+      static bool decode(const Node& node, Vec3& rhs) {
+         if(!node.IsSequence() || node.size() != 3)
+            return false;
+
+         rhs.x = node[0].as<double>();
+         rhs.y = node[1].as<double>();
+         rhs.z = node[2].as<double>();
+         return true;
+      }
+   };
+   
+   template<>
+   struct convert<Power> {
+      static Node encode (const Power& rhs) {
+         Node node;
+         node["name"] = rhs.name;
+         node["damage"] = rhs.damage;
+         return node;
+      }
+      
+      static bool decode(const Node& node, Power& rhs) {
+         rhs.name = node["name"].as<std::string>();
+         rhs.damage = node["damage"].as<int>();
+         return true;
+      }
+   };
+
+   template<>
+   struct convert<Monster> {
+      static Node encode (const Monster& rhs){
+         Node node;
+         node["name"] = rhs.name;
+         node["position"] = rhs.position;
+         for(unsigned i = 0; i < rhs.powers.size(); i++) {
+            Node power_node;
+            power_node["name"] = rhs.powers[i].name;
+            power_node["damage"] = rhs.powers[i].damage;
+            node["powers"].push_back(power_node);
+         }
+         return node;
+      }
+
+      static bool decode(const Node& node, Monster& rhs) {
+         rhs.name = node["name"].as<std::string>();
+         rhs.position = node["position"].as<Vec3>();
+         const YAML::Node& powers = node["powers"];
+         for(unsigned i=0;i<powers.size();i++) {
+            Power power;
+            power = powers[i].as<Power>();
+            rhs.powers.push_back(power);
+         }
+         return true;
+      }
+   };
 }
 
-void operator >> (const YAML::Node& node, Power& power) {
-   node["name"] >> power.name;
-   node["damage"] >> power.damage;
-}
-
-void operator >> (const YAML::Node& node, Monster& monster) {
-   node["name"] >> monster.name;
-   node["position"] >> monster.position;
-   const YAML::Node& powers = node["powers"];
-   for(unsigned i=0;i<powers.size();i++) {
-      Power power;
-      powers[i] >> power;
-      monster.powers.push_back(power);
-   }
-}
-
-int main()
+int main() //测试程序  
 {
-   std::ifstream fin("monsters.yaml");
-   YAML::Parser parser(fin);
-   YAML::Node doc;
-   parser.GetNextDocument(doc);
-   for(unsigned i=0;i<doc.size();i++) {
+   YAML::Node config = YAML::LoadFile("monsters.yaml");
+
+   Monster mon;
+   mon.name = "new_monster";
+   mon.position.x = 1;
+   mon.position.y = 2;
+   mon.position.z = 3;
+   Power power1;
+   power1.name = "power1";
+   power1.damage = 4;
+   Power power2;
+   power2.name = "power2";
+   power2.damage = 5;
+   mon.powers.push_back(power1);
+   mon.powers.push_back(power2);
+   config.push_back(mon);
+
+   std::vector<Monster> monsters;
+   for(unsigned i=0;i<config.size();i++) {
       Monster monster;
-      doc[i] >> monster;
+      monster = config[i].as<Monster>();
+      monsters.push_back(monster);
       std::cout << monster.name << "\n";
+      std::cout << monster.position.x << " " << monster.position.y << " " << monster.position.z << "\n"
+;
+      for(unsigned j = 0; j < monster.powers.size(); j++){
+         std::cout << monster.powers[j].name << " " << monster.powers[j].damage << "\n";
+      }
+      std::cout << "------------------------" << "\n";
    }
 
    return 0;
@@ -172,7 +242,33 @@ int main()
 {% endhighlight %}
 
 编译
-
+{% highlight html %}
+sudo g++ -o test_new_api -lyaml-cpp test_new_api.cpp 
+{% endhighlight %}
 运行
-
+{% highlight html %}
+./test_new_api.cpp
+{% endhighlight %}
 结果
+{% highlight html %}
+Ogre
+0 5 0
+Club 10
+Fist 8
+------------------------
+Dragon
+1 0 10
+Fire Breath 25
+Claws 15
+------------------------
+Wizard
+5 -3 0
+Acid Rain 50
+Staff 3
+------------------------
+new_monster
+1 2 3
+power1 4
+power2 5
+------------------------
+{% endhighlight %}
