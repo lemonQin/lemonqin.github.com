@@ -13,7 +13,7 @@ share: true
 
 [下载yaml-cpp的最新版本](http://code.google.com/p/yaml-cpp/downloads/list), 目前的最新版本是yaml-cpp-0.5.1
 
-**较为通用的版本为0.3.0,使用的是old API, 0.5.1使用的是new API, 新老API差别很大，在参看使用[wiki](http://code.google.com/p/yaml-cpp/w/list)时，要看清楚， 以免出现误用，耽误时间**
+**较为通用的版本为0.3.0，使用的是old API，0.5.1使用的是new API，新老API差别很大，在参看使用[wiki](http://code.google.com/p/yaml-cpp/w/list)时，要看清楚，以免出现误用，耽误时间**
 
 yaml-cpp需要CMake提供跨平台编译，因此如果没有安装CMake，需要首先安装CMake
 
@@ -82,7 +82,7 @@ make之后会看到生成的libyaml-cpp.so.0.5.1
 
 ###程序中使用
 
-[官网上有old API例子](https://code.google.com/p/yaml-cpp/wiki/HowToParseADocument) **old API**
+[官网上有**old API**例子](https://code.google.com/p/yaml-cpp/wiki/HowToParseADocument)
 
 由于安装的是0.5.1版本，用法参照[Tutorial](http://code.google.com/p/yaml-cpp/wiki/Tutorial)
 
@@ -208,6 +208,7 @@ int main() //测试程序
 {
    YAML::Node config = YAML::LoadFile("monsters.yaml");
 
+   //添加新数据
    Monster mon;
    mon.name = "new_monster";
    mon.position.x = 1;
@@ -223,20 +224,19 @@ int main() //测试程序
    mon.powers.push_back(power2);
    config.push_back(mon);
 
+   //读取数据
    std::vector<Monster> monsters;
    for(unsigned i=0;i<config.size();i++) {
       Monster monster;
       monster = config[i].as<Monster>();
       monsters.push_back(monster);
       std::cout << monster.name << "\n";
-      std::cout << monster.position.x << " " << monster.position.y << " " << monster.position.z << "\n"
-;
+      std::cout << monster.position.x << " " << monster.position.y << " " << monster.position.z << "\n";
       for(unsigned j = 0; j < monster.powers.size(); j++){
          std::cout << monster.powers[j].name << " " << monster.powers[j].damage << "\n";
       }
       std::cout << "------------------------" << "\n";
    }
-
    return 0;
 }
 {% endhighlight %}
