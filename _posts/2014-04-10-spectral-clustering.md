@@ -4,7 +4,7 @@ title: 谱聚类
 description: 
 tags: [谱聚类, 聚类算法]
 image:
-  background: triangular.png
+  feature: abstract-3.jpg
 comments: true
 share: true
 ---

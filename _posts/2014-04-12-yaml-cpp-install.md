@@ -4,7 +4,7 @@ title: yaml-cpp安装及使用
 description: yaml-cpp安装及在C++中的简单使用
 tags: [yaml, yaml-cpp, C++]
 image:
-  background: triangular.png
+  feature: abstract-4.jpg
 comments: true
 share: true
 ---
