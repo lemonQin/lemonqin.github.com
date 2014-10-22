@@ -37,10 +37,29 @@ urlpatterns += static(STATIC_URL, document_root = STATIC_ROOT)
 <script type="text/javascript" src="/static/js/jquery-2.1.1.js"></script>
 {% endhightlight %}
 
-### Django模板使用
+### 数据库相关操作
 
+#### Django链接Mysql数据库
+
+#### 数据库相关操作
+
+
+### Django模板使用
+1. 在settings.py中配置模板路径
+
+2. 模板文件编写
+
+3. url配置及参数传递
 
 ### Django中图片上传操作
 
 
 ### Django在Apache部署
+
+#### 安装配置Apache
+
+#### 安装wsgi_mod模块
+
+#### 开放相应端口
+
+#### 为Django网站配置wsgi
