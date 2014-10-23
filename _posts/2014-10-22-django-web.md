@@ -27,7 +27,7 @@ STATICFILES_DIRS = (
 {% endhighlight %}
 
 并且在utls.py文件后面添加
-{% hightlight python linenos %}
+{% highlight python linenos %}
 urlpatterns += static(STATIC_URL, document_root = STATIC_ROOT)
 {% endhighlight %}
 经过这样设置以后，就可以在HTML文件中引用了
@@ -35,7 +35,7 @@ urlpatterns += static(STATIC_URL, document_root = STATIC_ROOT)
 {% highlight python linenos%}
 <link rel = "stylesheet" href="/static/css/bootstrap.min.css">
 <script type="text/javascript" src="/static/js/jquery-2.1.1.js"></script>
-{% endhightlight %}
+{% endhighlight %}
 
 ### 数据库相关操作
 
