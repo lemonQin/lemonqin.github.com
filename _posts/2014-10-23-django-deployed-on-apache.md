@@ -14,9 +14,11 @@ share: true
 ## 安装wsgi_mod模块
 
 ## 开放相应端口
+
 /etc/sysconfig/iptables
 
 {% highlight %}
+{% raw %}
 # Firewall configuration written by system-config-firewall
 # Manual customization of this file is not recommended.
 *filter
@@ -32,13 +34,14 @@ share: true
 -A INPUT -j REJECT --reject-with icmp-host-prohibited
 -A FORWARD -j REJECT --reject-with icmp-host-prohibited
 COMMIT
-
+{% endraw %}
 {% endhighlight %}
 
 
 ## 为Django网站配置wsgi
 
 {% highlight %}
+{% raw %}
 ServerName 14.1.23.22:80
 
 LoadModule wsgi_module modules/mod_wsgi.so
@@ -62,4 +65,5 @@ Alias /static/ /root/web-project/DeviceWeb/static/
     Allow from all
 </Directory>
 
+{% endraw %}
 {% endhighlight %}
