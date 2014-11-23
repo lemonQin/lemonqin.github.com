@@ -10,7 +10,7 @@ share: true
 ---
 
 
-### Django中静态文件配置
+## Django中静态文件配置
 
 django构建网站的基本操作，这里就不说了。这里只说在我使用Django制作网站的过程中遇到过的一些小事情。
 
@@ -38,7 +38,7 @@ urlpatterns += static(STATIC_URL, document_root = STATIC_ROOT)
 <script type="text/javascript" src="/static/js/jquery-2.1.1.js"></script>
 {% endhighlight %}
 
-### 数据库相关操作
+## 数据库相关操作
 
 数据库一般使用的是mysql，在本地安装mysql的服务器和客户端后，需要安装myql的python包python-mysql，接着需要在settings.py中对数据库进行配置
 
@@ -55,7 +55,7 @@ DATABASES = {
 }
 {% endhighlight %}
 
-### Django模板使用
+## Django模板使用
 
 1. 在settings.py中配置模板路径
 
@@ -70,9 +70,9 @@ TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates').replace('\
 
 模板本质上是html文件，就是要要成先的网页页面，因此html相应的标签都要有，不同的是模板通过添加变量和模版标签来充实html的内容
 
-变量用{{}}包围，html中会显示该变量的值，传递 
+*变量用{{}}包围，html中会显示该变量的值
 
-块标签用{% raw %}{%%}{% endraw %}包围，html会显示该块标签中定义的内容
+*块标签用{% raw %}{%%}{% endraw %}包围，html会显示该块标签中定义的内容
 
 一个简单的例子说明一下，html页面是怎么呈现的：
 在template目录下定义index.html页面
@@ -119,10 +119,10 @@ def index(request):
     return render_to_response('index.html', {'person_name': name, 'item':items, })
 {% endhighlight %}
 
-最重要的依据是return，返回index.html页面，并且将后面的变量传递到index.html中，变量是json结构，可以传递多个。这样运行网站，输入http://localhost:8000就可以看到index.html并且显示了相应的变量信息。
+最重要的一句是return，返回index.html页面，并且将后面的变量传递到index.html中，变量是json结构，可以传递多个。这样运行网站，输入http://localhost:8000就可以看到index.html并且显示了相应的变量信息。
 
 
-### Django后台管理
+## Django后台管理
 1. 配置settings.py
 {% highlight python linenos%}
 INSTALLED_APPS = (
@@ -177,7 +177,7 @@ admin.site.register(CompanyNews, CompanyNewsAdmin)
 
 这样运行项目，打开http://localhost:8000/admin就可以看到管理界面了，当然要输入用户名和密码
 
-### Django中图片上传操作
+## Django中图片上传操作
 
 后台的图片上传操作django默认是上传到MEDIA_ROOT目录下面的，因此要在settings.py中配置. 由于static下的东西一般是配置了可以在前台显示的，所以一般上传路径也在static下
 settings.py
