@@ -15,6 +15,7 @@ share: true
 
 ## 开放相应端口
 /etc/sysconfig/iptables
+
 {% highlight %}
 # Firewall configuration written by system-config-firewall
 # Manual customization of this file is not recommended.
@@ -36,6 +37,7 @@ COMMIT
 
 
 ## 为Django网站配置wsgi
+
 {% highlight %}
 ServerName 14.1.23.22:80
 
