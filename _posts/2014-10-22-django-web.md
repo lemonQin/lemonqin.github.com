@@ -85,9 +85,11 @@ TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates').replace('\
 <p>Here are the items you've ordered:</p>  
 
 <ul>  
+{% raw %}
 {% for item in item_list %}  
 <li>{{ item }}</li>  
 {% endfor %}  
+{% endraw %}
 </ul>  
   
 </body>  
