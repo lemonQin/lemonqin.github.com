@@ -17,7 +17,6 @@ share: true
 
 {% highlight %}
 {% raw %}
-/etc/sysconfig/iptables
 
 # Firewall configuration written by system-config-firewall
 # Manual customization of this file is not recommended.
@@ -40,28 +39,3 @@ COMMIT
 
 ## 为Django网站配置wsgi
 
-{% highlight %}
-{% raw %}
-ServerName 14.1.23.22:80
-
-LoadModule wsgi_module modules/mod_wsgi.so
-
-WSGIScriptAlias / /root/web-project/DeviceWeb/DeviceWeb/wsgi.py
-WSGIPythonPath /root/web-project/DeviceWeb/
-
-<Directory /root/web-project/DeviceWeb>
-<Files wsgi.py>
-Order deny,allow
-Allow from all
-</Files>
-</Directory>
-
-Alias /static/ /root/web-project/DeviceWeb/static/
-<Directory /root/web-project/DeviceWeb/static>
-    Options indexes FollowSymLinks
-    AllowOverride None
-    Order deny,allow
-    Allow from all
-</Directory>
-{% endraw %}
-{% endhighlight %}
