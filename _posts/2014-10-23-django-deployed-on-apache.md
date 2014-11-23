@@ -56,7 +56,6 @@ Allow from all
 </Files>
 </Directory>
 
-
 Alias /static/ /root/web-project/DeviceWeb/static/
 <Directory /root/web-project/DeviceWeb/static>
     Options indexes FollowSymLinks
@@ -64,6 +63,5 @@ Alias /static/ /root/web-project/DeviceWeb/static/
     Order deny,allow
     Allow from all
 </Directory>
-
 {% endraw %}
 {% endhighlight %}
