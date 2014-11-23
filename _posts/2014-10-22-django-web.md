@@ -41,7 +41,7 @@ urlpatterns += static(STATIC_URL, document_root = STATIC_ROOT)
 
 数据库一般使用的是mysql，在本地安装mysql的服务器和客户端后，需要安装myql的python包python-mysql，接着需要在setting.xml中对数据库进行配置
 
-{% hightlight %}
+{% highlight %}
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -52,7 +52,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-{% endhightlight %}
+{% endhighlight %}
 
 ### Django模板使用
 1. 在settings.py中配置模板路径
@@ -84,14 +84,31 @@ TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates').replace('\
 <li>{{ item }}</li>  
 {% endfor %}  
 </ul>  
-
-{% if ordered_warranty %}  
-<p>Your warranty information will be included in the packaging.</p>  
-{% endif %}  
- 
+  
 </body>  
 </html>  
 {% endhighlight %}
+
+
+首先，在urls.py中定义url规则，例如网站默认首页显示index.html
+{% highlight %}
+urlpatterns = patterns('',
+    # Examples:
+    # url(r'^$', 'DeviceWeb.views.home', name='home'),
+    # url(r'^blog/', include('blog.urls')),
+
+    url(r'^$', index),
+)
+{% endhighlight %}
+意思是，输入网址会调用views.py中的index函数。
+接着在views.py中定义index函数：
+{% highlight %}
+def index(request):
+	name='Jack'
+	items=['aaa', 'bbb', 'ccc']
+    return render_to_response('index.html', {'person_name': name, 'item':items, })
+{% endhighlight %}
+最重要的依据是return，返回index.html页面，并且将后面的变量传递到index.html中，变量是json结构，可以传递多个。这样运行网站，输入http://localhost:8000就可以看到index.html并且显示了相应的变量信息。
 
 
 3. url配置及参数传递
