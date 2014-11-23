@@ -15,10 +15,10 @@ share: true
 
 ## 开放相应端口
 
-/etc/sysconfig/iptables
-
 {% highlight %}
 {% raw %}
+/etc/sysconfig/iptables
+
 # Firewall configuration written by system-config-firewall
 # Manual customization of this file is not recommended.
 *filter
