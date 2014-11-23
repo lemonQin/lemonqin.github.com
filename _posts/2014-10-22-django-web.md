@@ -72,7 +72,7 @@ TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates').replace('\
 
 变量用{{}}包围，html中会显示该变量的值，传递 
 
-块标签用{%%}包围，html会显示该块标签中定义的内容
+块标签用{% raw %}{%%}{% endraw %}包围，html会显示该块标签中定义的内容
 
 一个简单的例子说明一下，html页面是怎么呈现的：
 在template目录下定义index.html页面
