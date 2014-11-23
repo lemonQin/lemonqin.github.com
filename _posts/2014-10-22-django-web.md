@@ -23,13 +23,14 @@ STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static').replace('\\', '/
 STATICFILES_DIRS = (
     os.path.join(os.path.dirname(__file__), '../static').replace('\\', '/'),
 )
-
 {% endhighlight %}
 
 并且在utls.py文件后面添加
+
 {% highlight python linenos %}
 urlpatterns += static(STATIC_URL, document_root = STATIC_ROOT)
 {% endhighlight %}
+
 经过这样设置以后，就可以在HTML文件中引用了
 
 {% highlight python linenos%}
@@ -41,7 +42,7 @@ urlpatterns += static(STATIC_URL, document_root = STATIC_ROOT)
 
 数据库一般使用的是mysql，在本地安装mysql的服务器和客户端后，需要安装myql的python包python-mysql，接着需要在settings.py中对数据库进行配置
 
-{% highlight %}
+{% highlight python linenos%}
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -55,9 +56,10 @@ DATABASES = {
 {% endhighlight %}
 
 ### Django模板使用
+
 1. 在settings.py中配置模板路径
 
-{% highlight %}
+{% highlight python linenos%}
 TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/'),)
 {% endhighlight %}
@@ -68,11 +70,13 @@ TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates').replace('\
 
 模板本质上是html文件，就是要要成先的网页页面，因此html相应的标签都要有，不同的是模板通过添加变量和模版标签来充实html的内容
 
-* 变量用{{}}包围，html中会显示该变量的值，传递 
-* 块标签用{%%}包围，html会显示该块标签中定义的内容
+变量用{{}}包围，html中会显示该变量的值，传递 
+
+块标签用{%%}包围，html会显示该块标签中定义的内容
 
 一个简单的例子说明一下，html页面是怎么呈现的：
 在template目录下定义index.html页面
+
 {% highlight html %}
 <html>  
 <head><title>模板实例</title></head>  
@@ -93,7 +97,7 @@ TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates').replace('\
 
 首先，在urls.py中定义url规则，例如网站默认首页显示index.html
 
-{% highlight %}
+{% highlight python linenos%}
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'DeviceWeb.views.home', name='home'),
@@ -106,7 +110,7 @@ urlpatterns = patterns('',
 意思是，输入网址会调用views.py中的index函数。
 接着在views.py中定义index函数：
 
-{% highlight %}
+{% highlight python linenos%}
 def index(request):
 	name='Jack'
 	items=['aaa', 'bbb', 'ccc']
@@ -118,7 +122,7 @@ def index(request):
 
 ### Django后台管理
 1. 配置settings.py
-{% highlight %}
+{% highlight python linenos%}
 INSTALLED_APPS = (
     'django.contrib.admin',  ###添加这句
     'django.contrib.auth',
@@ -129,8 +133,9 @@ INSTALLED_APPS = (
     'DevWeb', #自己的项目
 )
 {% endhighlight %}
+
 2. 配置urls.py
-{% highlight %}
+{% highlight python linenos%}
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'DeviceWeb.views.home', name='home'),
@@ -142,9 +147,11 @@ urlpatterns = patterns('',
 {% endhighlight %}
 
 3. 配置admin.py
+
 对在models.py中创建的模型，在admin.py下进行注册，例如：
 models.py
-{% highlight %}
+
+{% highlight python linenos%}
 class CompanyNews(models.Model):
     title = models.CharField(max_length=30)
     public_time = models.DateTimeField('create date')
@@ -156,13 +163,14 @@ class CompanyNews(models.Model):
 class CompanyNewsAdmin(admin.ModelAdmin):
 	pass
 {% endhighlight %}
+
 admin.py
-{% highlight %}
+
+{% highlight python linenos%}
 from django.contrib import admin
 from DevWeb.models import CompanyNews, CompanyNewsAdmin
 
 admin.site.register(CompanyNews, CompanyNewsAdmin)
-
 {% endhighlight %}
 
 这样运行项目，打开http://localhost:8000/admin就可以看到管理界面了，当然要输入用户名和密码
@@ -171,14 +179,16 @@ admin.site.register(CompanyNews, CompanyNewsAdmin)
 
 后台的图片上传操作django默认是上传到MEDIA_ROOT目录下面的，因此要在settings.py中配置. 由于static下的东西一般是配置了可以在前台显示的，所以一般上传路径也在static下
 settings.py
-{% highlight %}
+
+{% highlight python linenos%}
 MEDIA_ROOT = 'static/media/'
 MEDIA_URL = '/static/media/'
 {% endhighlight %}
 
 model.py中需要进行如下设置：
 model.py
-{% highlight %}
+
+{% highlight python linenos%}
 class StaticImage(models.Model):
     image = models.ImageField(default='', blank=True, upload_to='.')
 
@@ -191,6 +201,7 @@ class StaticImage(models.Model):
 {% endhighlight %}
 
 则在后台，StaticImage的image域可以用来上传图片
+
 <figure>
 <img src="/images/django-static-image1.png" alt="">
 </figure>
